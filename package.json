@@ -1,13 +1,13 @@
 {
-  "name": "mailchimp_newsletter",
+  "name": "fimbo",
   "version": "1.0.0",
-  "description": "Simple newsletter app using Mailchimp",
+  "description": "Fimbo application",
   "main": "app.js",
   "scripts": {
     "start": "node app",
     "dev": "nodemon app"
   },
-  "author": "Brad Traversy",
+  "author": "edmondGihozo & Flora",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",

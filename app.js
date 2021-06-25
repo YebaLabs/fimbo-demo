@@ -1,12 +1,11 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const fetch = require('node-fetch');
-require('dotenv').config()
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
+const fetch = require("node-fetch");
+require("dotenv").config();
 
 const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
 const MAILCHIMP_LIST_ID = process.env.MAILCHIMP_LIST_ID;
-
 
 const app = express();
 
@@ -14,15 +13,15 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Static folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "publicweb/fimbo-demo/public")));
 
 // Signup Route
-app.post('/signup', (req, res) => {
-  const { firstName, lastName, email,phone } = req.body;
+app.post("/signup", (req, res) => {
+  const { firstName, lastName, email, phone } = req.body;
 
   // Make sure fields are filled
-  if (!firstName || !lastName || !email||!phone) {
-    res.redirect('/fail.html');
+  if (!firstName || !lastName || !email || !phone) {
+    res.redirect("/fail.html");
     return;
   }
 
@@ -31,30 +30,32 @@ app.post('/signup', (req, res) => {
     members: [
       {
         email_address: email,
-        status: 'subscribed',
+        status: "subscribed",
         merge_fields: {
           FNAME: firstName,
           LNAME: lastName,
-          PHONE: phone
-        }
-      }
-    ]
+          PHONE: phone,
+        },
+      },
+    ],
   };
 
   const postData = JSON.stringify(data);
 
   fetch(`https://us1.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      Authorization: `auth ${MAILCHIMP_API_KEY}`
+      Authorization: `auth ${MAILCHIMP_API_KEY}`,
     },
-    body: postData
+    body: postData,
   })
-    .then(res.statusCode === 200 ?
-      res.redirect('/success.html') :
-      res.redirect('/fail.html'))
-    .catch(err => console.log(err))
-})
+    .then(
+      res.statusCode === 200
+        ? res.redirect("/success.html")
+        : res.redirect("/fail.html")
+    )
+    .catch((err) => console.log(err));
+});
 
 const PORT = process.env.PORT || 5000;
 
