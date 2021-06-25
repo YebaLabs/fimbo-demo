@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Static folder
-app.use(express.static(path.join(__dirname, "publicweb/fimbo-demo/public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Signup Route
 app.post("/signup", (req, res) => {
